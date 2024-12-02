@@ -126,7 +126,7 @@ Future<String> uploadImageToStorage(String filePath) async {
     Uint8List fileBytes = await XFile(filePath).readAsBytes();
 
     // Upload image as bytes
-    final UploadTask uploadTask = storageReference.putData(fileBytes);
+    final UploadTask uploadTask = storageReference.putBlob(fileBytes);
 
     // Wait for upload to complete
     final TaskSnapshot snapshot = await uploadTask;
@@ -144,7 +144,7 @@ Future<void> saveDataToFirestore(UserData userData) async {
     String imageUrl = await uploadImageToStorage(userData.image);
 
     // Save user data to Firestore
-    await FirebaseFirestore.instance.collection('users').add({
+    await FirebaseFirestore.instance.collection('user').add({
       'image': imageUrl,
       'name': userData.name,
       'email': userData.email,
